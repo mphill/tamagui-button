@@ -1,20 +1,33 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useFonts } from "expo-font";
 
+import { StatusBar } from "expo-status-bar";
+
+import { useColorScheme } from "react-native";
+
+import { Paragraph, Spacer, TamaguiProvider, Theme, YStack } from "tamagui";
+import config from "./tamagui.config";
+import { Button } from "./button";
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+	const colorScheme = useColorScheme();
+	const [loaded] = useFonts({
+		Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+		InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
+	});
+	if (!loaded) {
+		return null;
+	}
+	return (
+		<TamaguiProvider config={config}>
+			<Theme name={colorScheme === "dark" ? "dark" : "light"}>
+				<YStack f={1} backgroundColor={"$backgroundSoft"}>
+					<Spacer size={80} />
+
+					<Button>Test</Button>
+
+					<StatusBar style="auto" />
+				</YStack>
+			</Theme>
+		</TamaguiProvider>
+	);
+}
