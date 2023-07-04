@@ -6,9 +6,12 @@ import { useColorScheme } from "react-native";
 
 import { Paragraph, Spacer, TamaguiProvider, Theme, YStack } from "tamagui";
 import config from "./tamagui.config";
-import { Button } from "./button";
+
 export default function App() {
 	const colorScheme = useColorScheme();
+
+	const values = ["1", "2", "3"];
+
 	const [loaded] = useFonts({
 		Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
 
@@ -23,7 +26,11 @@ export default function App() {
 				<YStack f={1} backgroundColor={"$backgroundSoft"}>
 					<Spacer size={80} />
 
-					<Button>Test</Button>
+					{values.map((value) => (
+						<YStack key={value}>
+							<Paragraph color="red">{value}</Paragraph>
+						</YStack>
+					))}
 
 					<StatusBar style="auto" />
 				</YStack>
